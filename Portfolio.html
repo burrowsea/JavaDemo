@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Grade Challenge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        input[type="number"] {
+            width: 35px;
+            margin: 5px;
+        }
+        button {
+            margin-top: 10px;
+        }
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Portfolio Grade Challenge</h2>
+
+<form id="gradeForm">
+    <label for="analysis">Analysis (out of 25):</label>
+    <input type="number" id="analysis" name="analysis" min="0" max="25" required><br>
+
+    <label for="design">Design (out of 25):</label>
+    <input type="number" id="design" name="design" min="0" max="25" required><br>
+
+    <label for="implementation">Implementation (out of 25):</label>
+    <input type="number" id="implementation" name="implementation" min="0" max="25" required><br>
+
+    <label for="evaluation">Evaluation (out of 25):</label>
+    <input type="number" id="evaluation" name="evaluation" min="0" max="25" required><br>
+
+    <button type="button" onclick="calculateGrade()">Submit</button>
+</form>
+
+<div class="output" id="output"></div>
+
+<script>
+
+const grades = [
+    { threshold: 80, grade: "A*" },
+    { threshold: 67, grade: "A" },
+    { threshold: 54, grade: "B" },
+    { threshold: 41, grade: "C" },
+    { threshold: 31, grade: "D" },
+    { threshold: 22, grade: "E" },
+    { threshold: 13, grade: "F" },
+    { threshold: 4, grade: "G" },
+    { threshold: 0, grade: "U" }
+];
+
+
+function getGradeAndNext(totalMark) {
+    for (let i = 0; i < grades.length; i++) {
+        if (totalMark >= grades[i].threshold) {
+            const currentGrade = grades[i].grade;
+            const marksToNext = (i === 0) ? 0 : grades[i - 1].threshold - totalMark;
+            return { currentGrade, marksToNext };
+        }
+    }
+}
+
+
+function calculateGrade() {
+    const analysis = parseInt(document.getElementById("analysis").value) || 0;
+    const design = parseInt(document.getElementById("design").value) || 0;
+    const implementation = parseInt(document.getElementById("implementation").value) || 0;
+    const evaluation = parseInt(document.getElementById("evaluation").value) || 0;
+
+    const totalMark = analysis + design + implementation + evaluation;
+
+    const result = getGradeAndNext(totalMark);
+
+    let outputText = `Total Mark: ${totalMark}<br>Grade: ${result.currentGrade}`;
+
+    if (result.marksToNext > 0) {
+        outputText += `<br>You need ${result.marksToNext} more marks to reach the next grade boundary.`;
+    } else {
+        outputText += `<br>You are at the highest grade band.`;
+    }
+
+    document.getElementById("output").innerHTML = outputText;
+}
+</script>
+
+</body>
+</html>
