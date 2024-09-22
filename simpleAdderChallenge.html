@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Adder Challenge</title>
+    
 </head>
 <body>
-    <form>
-        Enter a number:
-        <br>
-        <input id="inpt" type="number" name="value1">
-        <br>
-        <input id="inpt" type="number" name="value2">
-        <br>
-        <button type="button" onclick="funct()">Add</button>
-    </form>
+    <h1>Simple Adder Challenge</h1>
+    <p>Enter two numbers:</p>
+    <input type="number" id="num1" placeholder="Enter first number"><br>
+    <input type="number" id="num2" placeholder="Enter second number"><br>
+    <button onclick="addNumbers()">Add</button>
+    <p id="result"></p>
     <script>
-        function funct(){
-        var x = document.getElementById("inpt").value1;
-        var y = document.getElementById("inpt").value2;
-        z = x + y;
-        document.write(z);
+        function addNumbers() {
+            var num1 = parseInt(document.getElementById("num1").value);
+            var num2 = parseInt(document.getElementById("num2").value);
+            var sum = num1 + num2;
+            document.getElementById("result").innerHTML = `${num1} and ${num2} add up to ${sum}.`;
         }
     </script>
-    
 </body>
+</html>
